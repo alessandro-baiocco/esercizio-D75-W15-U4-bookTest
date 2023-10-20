@@ -18,7 +18,7 @@ public class Loans {
     private LocalDate fine;
     private LocalDate effetiva;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)// ho scelto di fare un solo prestito per volta ad utente
     private User utente;
 
 
