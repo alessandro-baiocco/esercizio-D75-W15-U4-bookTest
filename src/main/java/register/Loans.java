@@ -2,10 +2,7 @@ package register;
 
 import catalog.Material;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -21,7 +18,7 @@ public class Loans {
     private LocalDate fine;
     private LocalDate effetiva;
 
-    @OneToOne(mappedBy = "prestito")
+    @OneToOne(mappedBy = "prestito", cascade = CascadeType.REMOVE)
     private User utente;
 
 
@@ -74,5 +71,18 @@ public class Loans {
 
     public void setEffetiva(LocalDate effetiva) {
         this.effetiva = effetiva;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Loans{" +
+                "id=" + id +
+                ", oggetto=" + oggetto +
+                ", inizio=" + inizio +
+                ", fine=" + fine +
+                ", effetiva=" + effetiva +
+                ", utente=" + utente +
+                '}';
     }
 }

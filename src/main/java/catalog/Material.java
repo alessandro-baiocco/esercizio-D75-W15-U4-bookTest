@@ -19,9 +19,8 @@ public abstract class Material {
     private int annoDiPubblicazione;
     private int numeroPagine;
 
-    @OneToOne
-    @JoinTable(name = "loans",
-            joinColumns = @JoinColumn(name = "book_ISBN"))
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "material_id")
     private Loans prestito;
 
 
@@ -36,10 +35,6 @@ public abstract class Material {
 
     public int getISBN() {
         return ISBN;
-    }
-
-    public void setISBN(int ISBN) {
-        this.ISBN = ISBN;
     }
 
     public String getTitolo() {

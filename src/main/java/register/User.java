@@ -13,9 +13,8 @@ public class User {
     private String cognome;
     private LocalDate dataDiNascita;
 
-    @OneToOne
-    @JoinTable(name = "loans",
-            joinColumns = @JoinColumn(name = "user_nTessera"))
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_nTessera")
     private Loans prestito;
 
     public User() {
@@ -63,5 +62,16 @@ public class User {
         this.dataDiNascita = dataDiNascita;
     }
 
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "nTessera=" + nTessera +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", dataDiNascita=" + dataDiNascita +
+                ", prestito=" + prestito +
+                '}';
+    }
 }
 

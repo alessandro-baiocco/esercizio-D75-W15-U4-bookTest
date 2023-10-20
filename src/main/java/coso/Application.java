@@ -1,9 +1,23 @@
 package coso;
 
+import archiveOperation.AggiungiOrimuovi;
+import archiveOperation.Ricerca;
+import catalog.Book;
+import catalog.Magazine;
+import dao.LoansDAO;
+import dao.MaterialDAO;
+import dao.UserDAO;
+import register.Loans;
+import register.User;
 import utils.JPAutil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.time.LocalDate;
+import java.util.InputMismatchException;
+import java.util.function.Supplier;
+
+import static other.Tools.*;
 
 
 public class Application {
@@ -13,51 +27,93 @@ public class Application {
     public static void main(String[] args) {
         EntityManager em = emf.createEntityManager();
 
-//        try {
-//            SalvaOCarica.primoCaricamento();
-//            esterno:
-//            while (true) {
-//                System.out.println("1 : per aggiungere o rimuovere");
-//                System.out.println("2 : per ricercare");
-//                System.out.println("3 : per salvare o ricaricare");
-//                System.out.println("4 : per vedere l'archivio");
-//                System.out.println("5 : per uscire");
-//                String userInputStr = input.nextLine();
-//                switch (userInputStr) {
-//                    case "1": {
-//                        AggiungiOrimuovi.operazione();
-//                        break;
-//                    }
-//                    case "2": {
-//                        Ricerca.ricerca();
-//                        break;
-//                    }
+        LocalDate now = LocalDate.now();
+//        LocalDate dateOfBirth = now.minusYears(rnd.nextInt(25 , 70));
+//        Date date2 = "1995-01-01";
+
+        MaterialDAO matDAO = new MaterialDAO(em);
+        UserDAO userDao = new UserDAO(em);
+        LoansDAO loanDao = new LoansDAO(em);
+
+
+        Supplier<Book> bookSupplier = () -> {
+            return new Book(faker.book().title(), rnd.nextInt(1950, 2023), rnd.nextInt(50, 500), faker.book().author(), faker.book().genre());
+        };
+        Supplier<Magazine> magazineSupplier = () -> {
+            return new Magazine(faker.book().title(), rnd.nextInt(1950, 2023), rnd.nextInt(50, 500), rndPerdiodo[rnd.nextInt(0, 2)]);
+        };
+        Supplier<User> userSupplier = () -> {
+            return new User(faker.name().firstName(), faker.name().lastName(), now.minusYears(rnd.nextInt(25, 70)));
+        };
+        Supplier<Loans> loansSupplier = () -> {
+            return new Loans(matDAO.findById(rnd.nextInt(77, 97)), userDao.findById(rnd.nextInt(97, 117)), now.minusWeeks(rnd.nextInt(25, 70)), now.plusDays(rnd.nextInt(0, 70)));
+        };
+
+
+//        for (int i = 0; i < 20; i++) {
+//            userDao.save(userSupplier.get());
+//        }
+
+//
+//        for (int i = 0; i < 10; i++) {
+//            loanDao.save(loansSupplier.get());
+//        }
+
+
+//        for (int i = 0; i < 10; i++) {
+//            matDAO.save(bookSupplier.get());
+//            matDAO.save(magazineSupplier.get());
+//        }
+
+
+        try {
+            Object SalvaOCarica;
+            SalvaOCarica.primoCaricamento();
+            esterno:
+            while (true) {
+                System.out.println("1 : per aggiungere o rimuovere");
+                System.out.println("2 : per ricercare");
+                System.out.println("3 : per salvare o ricaricare");
+                System.out.println("4 : per vedere l'archivio");
+                System.out.println("5 : per uscire");
+                String userInputStr = input.nextLine();
+                switch (userInputStr) {
+                    case "1": {
+                        AggiungiOrimuovi.operazione();
+                        break;
+                    }
+                    case "2": {
+                        Ricerca.ricerca();
+                        break;
+                    }
 //                    case "3": {
-//                        SalvaOCarica.salvaOcarica();
+////                        SalvaOCarica.salvaOcarica();
 //                        break;
 //                    }
 //                    case "4": {
-//                        System.out.println(catalogo);
+////                        System.out.println(catalogo);
 //                        break;
 //                    }
-//                    case "5": {
-//                        System.out.println("uscita");
-//                        break esterno;
-//                    }
-//                    default: {
-//                        System.out.println("eh? cosa ?");
-//                    }
-//
-//                }
-//            }
-//        } catch (InputMismatchException | NumberFormatException ex) {
-//            System.err.println("input non valido");
-//        } catch (Exception ex) {
-//            System.err.println("errore generico");
-//            System.out.println(ex.getMessage());
-//        } finally {
-//            input.close();
-//        }
+                    case "5": {
+                        System.out.println("uscita");
+                        break esterno;
+                    }
+                    default: {
+                        System.out.println("eh? cosa ?");
+                    }
+
+                }
+            }
+        } catch (InputMismatchException | NumberFormatException ex) {
+            System.err.println("input non valido");
+        } catch (Exception ex) {
+            System.err.println("errore generico");
+            System.out.println(ex.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+
     }
 
 

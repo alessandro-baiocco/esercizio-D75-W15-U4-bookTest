@@ -26,7 +26,7 @@ public class MaterialDAO {
     }
 
 
-    public Material findById(long id) {
+    public Material findById(int id) {
         return em.find(Material.class, id);
     }
 
