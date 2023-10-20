@@ -1,5 +1,6 @@
 package archiveOperation;
 
+import catalog.Book;
 import catalog.Material;
 import dao.MaterialDAO;
 
@@ -15,7 +16,7 @@ public class Ricerca {
     public static void ricerca() {
         MaterialDAO matDAO = new MaterialDAO(em);
         try {
-            System.out.println("come vuoi ricercare ? isbn , anno o autore ");
+            System.out.println("come vuoi ricercare ? isbn , anno , autore o titolo  ");
             String researchFromUser = input.nextLine().toLowerCase().trim();
             switch (researchFromUser) {
                 case "isbn": {
@@ -35,10 +36,19 @@ public class Ricerca {
                 case "autore": {
                     System.out.println("inserire autore da ricercare ");
                     String reseachAuthor = input.nextLine();
-                    List<Material> libriPerAutore = filterAuthor(reseachAuthor);
+                    List<Book> libriPerAutore = filterAuthor(reseachAuthor);
                     libriPerAutore.forEach(System.out::println);
                     break;
                 }
+
+                case "titolo": {
+                    System.out.println("inserire autore da ricercare ");
+                    String reseachTitle = input.nextLine();
+                    List<Material> libriPerTitoli = filterTitles(reseachTitle);
+                    libriPerTitoli.forEach(System.out::println);
+                    break;
+                }
+
                 default: {
                     System.out.println("eh? cosa ?");
                 }
@@ -58,9 +68,15 @@ public class Ricerca {
         return getAllQuery.getResultList();
     }
 
-    public static List<Material> filterAuthor(String author) {
-        TypedQuery<Material> getAllQuery = em.createQuery("SELECT m FROM Material m WHERE LOWER(m.autore) LIKE LOWER(CONCAT(:author , '%'))", Material.class);
+    public static List<Book> filterAuthor(String author) {
+        TypedQuery<Book> getAllQuery = em.createQuery("SELECT m FROM Material m WHERE LOWER(m.autore) LIKE LOWER(CONCAT(:author , '%'))", Book.class);
         getAllQuery.setParameter("author", author);
+        return getAllQuery.getResultList();
+    }
+
+    public static List<Material> filterTitles(String title) {
+        TypedQuery<Material> getAllQuery = em.createQuery("SELECT m FROM Material m WHERE LOWER(m.titolo) LIKE LOWER(CONCAT(:title , '%'))", Material.class);
+        getAllQuery.setParameter("title", title);
         return getAllQuery.getResultList();
     }
 
