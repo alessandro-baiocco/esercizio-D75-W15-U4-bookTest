@@ -11,14 +11,14 @@ public class Loans {
     @GeneratedValue
     private int id;
 
-    @OneToOne(mappedBy = "prestito")
+    @OneToOne(fetch = FetchType.LAZY)
     private Material oggetto;
 
     private LocalDate inizio;
     private LocalDate fine;
     private LocalDate effetiva;
 
-    @OneToOne(mappedBy = "prestito", cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY)
     private User utente;
 
 

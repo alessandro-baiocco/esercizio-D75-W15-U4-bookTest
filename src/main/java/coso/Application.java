@@ -1,9 +1,11 @@
 package coso;
 
 import archiveOperation.AggiungiOrimuovi;
+import archiveOperation.PrestiDigitazione;
 import archiveOperation.Ricerca;
 import catalog.Book;
 import catalog.Magazine;
+import catalog.Material;
 import dao.LoansDAO;
 import dao.MaterialDAO;
 import dao.UserDAO;
@@ -13,8 +15,10 @@ import utils.JPAutil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.function.Supplier;
 
 import static other.Tools.*;
@@ -46,7 +50,7 @@ public class Application {
             return new User(faker.name().firstName(), faker.name().lastName(), now.minusYears(rnd.nextInt(25, 70)));
         };
         Supplier<Loans> loansSupplier = () -> {
-            return new Loans(matDAO.findById(rnd.nextInt(77, 97)), userDao.findById(rnd.nextInt(97, 117)), now.minusWeeks(rnd.nextInt(25, 70)), now.plusDays(rnd.nextInt(0, 70)));
+            return new Loans(matDAO.findById(rnd.nextInt(713, 731)), userDao.findById(rnd.nextInt(693, 711)), now.minusWeeks(rnd.nextInt(25, 70)), now.plusDays(rnd.nextInt(0, 70)));
         };
 
 //
@@ -59,7 +63,7 @@ public class Application {
 //            loanDao.save(loansSupplier.get());
 //        }
 
-
+//
 //        for (int i = 0; i < 10; i++) {
 //            matDAO.save(bookSupplier.get());
 //            matDAO.save(magazineSupplier.get());
@@ -71,7 +75,7 @@ public class Application {
             while (true) {
                 System.out.println("1 : per aggiungere o rimuovere");
                 System.out.println("2 : per ricercare");
-                System.out.println("3 : per salvare o ricaricare");
+                System.out.println("3 : per vedere i prestiti");
                 System.out.println("4 : per vedere l'archivio");
                 System.out.println("5 : per uscire");
                 String userInputStr = input.nextLine();
@@ -84,14 +88,14 @@ public class Application {
                         Ricerca.ricerca();
                         break;
                     }
-//                    case "3": {
-////                        SalvaOCarica.salvaOcarica();
-//                        break;
-//                    }
-//                    case "4": {
-////                        System.out.println(catalogo);
-//                        break;
-//                    }
+                    case "3": {
+                        PrestiDigitazione.prestiti();
+                        break;
+                    }
+                    case "4": {
+                        catalogo().forEach(System.out::println);
+                        break;
+                    }
                     case "5": {
                         System.out.println("uscita");
                         break esterno;
@@ -112,6 +116,11 @@ public class Application {
             emf.close();
         }
 
+    }
+
+    public static List<Material> catalogo() {
+        TypedQuery<Material> getAllQuery = em.createQuery("SELECT M FROM Material M", Material.class);
+        return getAllQuery.getResultList();
     }
 
 

@@ -13,7 +13,8 @@ public class User {
     private String cognome;
     private LocalDate dataDiNascita;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "utente", cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "user_id")
     private Loans prestito;
 
     public User() {
@@ -69,7 +70,6 @@ public class User {
                 ", nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
                 ", dataDiNascita=" + dataDiNascita +
-                ", prestito=" + prestito +
                 '}';
     }
 }

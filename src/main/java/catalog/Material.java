@@ -19,7 +19,9 @@ public abstract class Material {
     private int annoDiPubblicazione;
     private int numeroPagine;
 
-    @OneToOne(fetch = FetchType.LAZY)
+
+    @OneToOne(mappedBy = "oggetto")
+    @JoinColumn(name = "book_isbn")
     private Loans prestito;
 
 
