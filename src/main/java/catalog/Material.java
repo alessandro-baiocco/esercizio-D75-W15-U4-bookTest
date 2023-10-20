@@ -1,14 +1,28 @@
 package catalog;
 
+import javax.persistence.*;
 import java.util.Objects;
 
-public abstract class Material {
 
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class Material {
+    @Id
+    @GeneratedValue
     private int ISBN;
     private String titolo;
     private int annoDiPubblicazione;
     private int numeroPagine;
 
+
+    public Material() {
+    }
+
+    public Material(String titolo, int annoDiPubblicazione, int numeroPagine) {
+        this.titolo = titolo;
+        this.annoDiPubblicazione = annoDiPubblicazione;
+        this.numeroPagine = numeroPagine;
+    }
 
     public int getISBN() {
         return ISBN;
