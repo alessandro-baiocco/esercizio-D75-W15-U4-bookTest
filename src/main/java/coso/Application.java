@@ -3,14 +3,7 @@ package coso;
 import archiveOperation.AggiungiOrimuovi;
 import archiveOperation.PrestiDigitazione;
 import archiveOperation.Ricerca;
-import catalog.Book;
-import catalog.Magazine;
 import catalog.Material;
-import dao.LoansDAO;
-import dao.MaterialDAO;
-import dao.UserDAO;
-import register.Loans;
-import register.User;
 import utils.JPAutil;
 
 import javax.persistence.EntityManager;
@@ -19,9 +12,8 @@ import javax.persistence.TypedQuery;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.function.Supplier;
 
-import static other.Tools.*;
+import static other.Tools.input;
 
 
 public class Application {
@@ -35,23 +27,23 @@ public class Application {
 //        LocalDate dateOfBirth = now.minusYears(rnd.nextInt(25 , 70));
 //        Date date2 = "1995-01-01";
 
-        MaterialDAO matDAO = new MaterialDAO(em);
-        UserDAO userDao = new UserDAO(em);
-        LoansDAO loanDao = new LoansDAO(em);
-
-
-        Supplier<Book> bookSupplier = () -> {
-            return new Book(faker.book().title(), rnd.nextInt(1950, 2023), rnd.nextInt(50, 500), faker.book().author(), faker.book().genre());
-        };
-        Supplier<Magazine> magazineSupplier = () -> {
-            return new Magazine(faker.book().title(), rnd.nextInt(1950, 2023), rnd.nextInt(50, 500), rndPerdiodo[rnd.nextInt(0, 2)]);
-        };
-        Supplier<User> userSupplier = () -> {
-            return new User(faker.name().firstName(), faker.name().lastName(), now.minusYears(rnd.nextInt(25, 70)));
-        };
-        Supplier<Loans> loansSupplier = () -> {
-            return new Loans(matDAO.findById(rnd.nextInt(713, 731)), userDao.findById(rnd.nextInt(693, 711)), now.minusWeeks(rnd.nextInt(25, 70)), now.plusDays(rnd.nextInt(0, 70)));
-        };
+//        MaterialDAO matDAO = new MaterialDAO(em);
+//        UserDAO userDao = new UserDAO(em);
+//        LoansDAO loanDao = new LoansDAO(em);
+//
+//
+//        Supplier<Book> bookSupplier = () -> {
+//            return new Book(faker.book().title(), rnd.nextInt(1950, 2023), rnd.nextInt(50, 500), faker.book().author(), faker.book().genre());
+//        };
+//        Supplier<Magazine> magazineSupplier = () -> {
+//            return new Magazine(faker.book().title(), rnd.nextInt(1950, 2023), rnd.nextInt(50, 500), rndPerdiodo[rnd.nextInt(0, 2)]);
+//        };
+//        Supplier<User> userSupplier = () -> {
+//            return new User(faker.name().firstName(), faker.name().lastName(), now.minusYears(rnd.nextInt(25, 70)));
+//        };
+//        Supplier<Loans> loansSupplier = () -> {
+//            return new Loans(matDAO.findById(rnd.nextInt(713, 731)), userDao.findById(rnd.nextInt(693, 711)), now.minusWeeks(rnd.nextInt(25, 70)), now.plusDays(rnd.nextInt(0, 70)));
+//        };
 
 //
 //        for (int i = 0; i < 20; i++) {

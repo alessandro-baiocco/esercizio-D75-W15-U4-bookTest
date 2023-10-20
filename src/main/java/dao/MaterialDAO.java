@@ -1,6 +1,5 @@
 package dao;
 
-import catalog.Magazine;
 import catalog.Material;
 
 import javax.persistence.EntityManager;
@@ -31,16 +30,16 @@ public class MaterialDAO {
     }
 
     public void delete(int id) {
-        Material matFounded = em.find(Magazine.class, id);
+        Material matFounded = em.find(Material.class, id);
         try {
             if (matFounded != null) {
                 EntityTransaction transaction = em.getTransaction();
                 transaction.begin();
                 em.remove(matFounded);
                 transaction.commit();
-                System.out.println("la rivista è stato cancellato correttamente");
+                System.out.println("l'oggetto è stato cancellato correttamente");
             } else {
-                System.err.println("la rivista non è stato trovato");
+                System.err.println("l'oggetto non è stato trovato");
             }
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
