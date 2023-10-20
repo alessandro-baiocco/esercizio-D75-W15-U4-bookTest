@@ -13,8 +13,7 @@ public class User {
     private String cognome;
     private LocalDate dataDiNascita;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_nTessera")
+    @OneToOne(fetch = FetchType.LAZY)
     private Loans prestito;
 
     public User() {

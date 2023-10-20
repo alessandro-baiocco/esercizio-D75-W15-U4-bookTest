@@ -2,16 +2,17 @@ package archiveOperation;
 
 import catalog.Book;
 import catalog.Magazine;
-import catalog.Material;
+import dao.MaterialDAO;
 
 import java.util.InputMismatchException;
-import java.util.Iterator;
 import java.util.function.Supplier;
 
+import static coso.Application.em;
 import static other.Tools.*;
 
 public class AggiungiOrimuovi {
     public static void operazione() {
+        MaterialDAO matDAO = new MaterialDAO(em);
 
 
         Supplier<Book> bookSupplier = () -> {
@@ -37,8 +38,7 @@ public class AggiungiOrimuovi {
                     int year = Integer.parseInt(input.nextLine());
                     System.out.println("num pagine ?");
                     int pageNumber = Integer.parseInt(input.nextLine());
-                    Book libroGenerato = new Book(title, year, pageNumber, autor, gener);
-                    catalogo.add(libroGenerato);
+                    matDAO.save(new Book(title, year, pageNumber, autor, gener));
                     System.out.println("aggiunta di " + title + " avvenuta con successo");
                     break;
                 }
@@ -52,31 +52,22 @@ public class AggiungiOrimuovi {
                     System.out.println("periodo ? 1 : settimanale , 2 : mensile , 3 : sequestrale , altro : sconosciuto ");
                     int perSel = Integer.parseInt(input.nextLine());
                     if (perSel > 3 || perSel < 1) perSel = 4;
-                    catalogo.add(new Magazine(autor, year, pageNumber, rndPerdiodo[perSel]));
+                    matDAO.save(new Magazine(autor, year, pageNumber, rndPerdiodo[perSel]));
                     System.out.println("aggiunta della rivista avvenuta con successo");
                     break;
                 }
                 case "-item": {
                     System.out.println("numero ISMB ?");
                     int itemToRemove = Integer.parseInt(input.nextLine());
-                    Iterator<Material> i = catalogo.iterator();
-                    while (i.hasNext()) {
-                        Material current = i.next();
-                        if (current.getISBN() == itemToRemove) {
-                            System.out.println("rimozione dell'oggetto " + current.getISBN() + " avvenuta con successo");
-                            i.remove();
-                            break;
-                        }
-                    }
-
+                    matDAO.delete(itemToRemove);
                     break;
                 }
                 case "random book": {
-                    catalogo.add(bookSupplier.get());
+                    matDAO.save(bookSupplier.get());
                     break;
                 }
                 case "random mag": {
-                    catalogo.add(magazineSupplier.get());
+                    matDAO.save(magazineSupplier.get());
                     break;
                 }
                 default: {

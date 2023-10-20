@@ -22,10 +22,10 @@ import static other.Tools.*;
 
 public class Application {
 
-    private static final EntityManagerFactory emf = JPAutil.emfCreate();
+    public static final EntityManagerFactory emf = JPAutil.emfCreate();
+    public static final EntityManager em = emf.createEntityManager();
 
     public static void main(String[] args) {
-        EntityManager em = emf.createEntityManager();
 
         LocalDate now = LocalDate.now();
 //        LocalDate dateOfBirth = now.minusYears(rnd.nextInt(25 , 70));
@@ -49,7 +49,7 @@ public class Application {
             return new Loans(matDAO.findById(rnd.nextInt(77, 97)), userDao.findById(rnd.nextInt(97, 117)), now.minusWeeks(rnd.nextInt(25, 70)), now.plusDays(rnd.nextInt(0, 70)));
         };
 
-
+//
 //        for (int i = 0; i < 20; i++) {
 //            userDao.save(userSupplier.get());
 //        }
@@ -67,8 +67,6 @@ public class Application {
 
 
         try {
-            Object SalvaOCarica;
-            SalvaOCarica.primoCaricamento();
             esterno:
             while (true) {
                 System.out.println("1 : per aggiungere o rimuovere");

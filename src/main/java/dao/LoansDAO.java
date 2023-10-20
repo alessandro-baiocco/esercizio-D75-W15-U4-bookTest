@@ -16,7 +16,6 @@ public class LoansDAO {
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-            System.out.println(prestito);
             em.persist(prestito);
             transaction.commit();
             System.out.println("Nuovo prestito salvato correttamente");

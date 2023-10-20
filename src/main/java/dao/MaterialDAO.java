@@ -30,7 +30,7 @@ public class MaterialDAO {
         return em.find(Material.class, id);
     }
 
-    public void delete(long id) {
+    public void delete(int id) {
         Material matFounded = em.find(Magazine.class, id);
         try {
             if (matFounded != null) {
