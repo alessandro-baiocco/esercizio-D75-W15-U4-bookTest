@@ -2,19 +2,27 @@ package register;
 
 import catalog.Material;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.time.LocalDate;
 
+@Entity
 public class Loans {
     @Id
     @GeneratedValue
     private int id;
+
+    @OneToOne(mappedBy = "prestito")
     private Material oggetto;
-    private User utente;
+
     private LocalDate inizio;
     private LocalDate fine;
     private LocalDate effetiva;
+
+    @OneToOne(mappedBy = "prestito")
+    private User utente;
 
 
     public Loans() {
@@ -42,10 +50,6 @@ public class Loans {
 
     public User getUtente() {
         return utente;
-    }
-
-    public void setUtente(User utente) {
-        this.utente = utente;
     }
 
     public LocalDate getInizio() {

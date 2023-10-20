@@ -1,18 +1,28 @@
 package catalog;
 
+import register.Loans;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "material_type")
 public abstract class Material {
     @Id
     @GeneratedValue
     private int ISBN;
+
+
     private String titolo;
     private int annoDiPubblicazione;
     private int numeroPagine;
+
+    @OneToOne
+    @JoinTable(name = "loans",
+            joinColumns = @JoinColumn(name = "book_ISBN"))
+    private Loans prestito;
 
 
     public Material() {

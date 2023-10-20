@@ -2,11 +2,13 @@ package catalog;
 
 import enums.Periodo;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 @Entity
+@DiscriminatorValue("rivista")
 public class Magazine extends Material {
 
     @Enumerated(EnumType.STRING)

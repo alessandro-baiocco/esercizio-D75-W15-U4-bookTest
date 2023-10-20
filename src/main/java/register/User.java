@@ -1,9 +1,9 @@
 package register;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
 public class User {
 
     @Id
@@ -13,15 +13,26 @@ public class User {
     private String cognome;
     private LocalDate dataDiNascita;
 
+    @OneToOne
+    @JoinTable(name = "loans",
+            joinColumns = @JoinColumn(name = "user_nTessera"))
+    private Loans prestito;
 
     public User() {
     }
-
 
     public User(String nome, String cognome, LocalDate dataDiNascita) {
         this.nome = nome;
         this.cognome = cognome;
         this.dataDiNascita = dataDiNascita;
+    }
+
+    public Loans getLoans() {
+        return prestito;
+    }
+
+    public void setLoans(Loans loans) {
+        this.prestito = loans;
     }
 
     public int getnTessera() {

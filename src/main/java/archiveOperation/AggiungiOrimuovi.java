@@ -15,7 +15,7 @@ public class AggiungiOrimuovi {
 
 
         Supplier<Book> bookSupplier = () -> {
-            return new Book(faker.book().author(), faker.book().genre(), faker.book().title(), rnd.nextInt(1950, 2023), rnd.nextInt(50, 500));
+            return new Book(faker.book().title(), rnd.nextInt(1950, 2023), rnd.nextInt(50, 500), faker.book().author(), faker.book().genre());
         };
         Supplier<Magazine> magazineSupplier = () -> {
             return new Magazine(faker.book().title(), rnd.nextInt(1950, 2023), rnd.nextInt(50, 500), rndPerdiodo[rnd.nextInt(0, 2)]);
@@ -37,7 +37,7 @@ public class AggiungiOrimuovi {
                     int year = Integer.parseInt(input.nextLine());
                     System.out.println("num pagine ?");
                     int pageNumber = Integer.parseInt(input.nextLine());
-                    Book libroGenerato = new Book(autor, title, gener, year, pageNumber);
+                    Book libroGenerato = new Book(title, year, pageNumber, autor, gener);
                     catalogo.add(libroGenerato);
                     System.out.println("aggiunta di " + title + " avvenuta con successo");
                     break;
